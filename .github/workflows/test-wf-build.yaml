@@ -16,7 +16,7 @@ jobs:
     concurrency:
       group:   ${{ github.workflow }}-${{ github.head_ref || github.ref }}
       cancel-in-progress: true
-    uses: celo-org/reusable-workflows/.github/workflows/docker-build.yaml@786e0d4754480027bc90570b3bc5988a9016beb7
+    uses: celo-org/reusable-workflows/.github/workflows/docker-build.yaml@v3.0.0-alvaro
     with:
       workload-id-provider: projects/1094498259535/locations/global/workloadIdentityPools/gh-tests-gh-workflows-actions/providers/github-by-repos
       service-account: tests-gh-workflows-actions@devopsre.iam.gserviceaccount.com
