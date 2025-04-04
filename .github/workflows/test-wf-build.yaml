@@ -3,6 +3,9 @@ name: "[cLabs] Publish Docker Image For Testing"
 on:
   workflow_dispatch:
   push:
+      branches:
+        - '**'
+      tags: []
   pull_request:
 
 jobs:
