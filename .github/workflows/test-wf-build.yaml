@@ -3,6 +3,7 @@ name: "[cLabs] Publish Docker Image For Testing"
 on:
   workflow_dispatch:
   push:
+  pull_request:
 
 jobs:
   Build-Container-Test:
