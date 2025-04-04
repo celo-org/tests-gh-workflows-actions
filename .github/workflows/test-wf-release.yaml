@@ -25,8 +25,9 @@ jobs:
       tags: ${{(
         contains(github.event.release.tag_name, 'rc') || 
         contains(github.event.release.tag_name, 'beta') || 
-        contains(github.event.release.tag_name, 'alpha') 
-        ? github.event.release.tag_name : format('{0},stable,latest', github.event.release.tag_name)
-        ) }}
+        contains(github.event.release.tag_name, 'alpha')) 
+          ? github.event.release.tag_name 
+          : format('{0},stable,latest', github.event.release.tag_name)
+       }}
       context: .
       trivy-enabled: true
