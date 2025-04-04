@@ -13,10 +13,12 @@ jobs:
         id: set_tags
         run: |
           if [[ "${{ github.event.release.tag_name }}" == *"rc"* || "${{ github.event.release.tag_name }}" == *"beta"* || "${{ github.event.release.tag_name }}" == *"alpha"* ]]; then
-            echo "tags=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+            echo "::set-output name=tags::${{ github.event.release.tag_name }}"
           else
-            echo "tags=${{ github.event.release.tag_name }},stable,latest" >> $GITHUB_ENV
+            echo "::set-output name=tags::${{ github.event.release.tag_name }},stable,latest"
           fi
+    outputs:
+      tags: ${{ steps.set_tags.outputs.tags }}
 
   Build-Container-Test:
     permissions:
