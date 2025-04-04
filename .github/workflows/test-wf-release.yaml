@@ -38,6 +38,6 @@ jobs:
       service-account: tests-gh-workflows-actions@devopsre.iam.gserviceaccount.com
       artifact-registry: us-west1-docker.pkg.dev/devopsre/dev-images/test-gh-workflows-actions
       platforms: linux/amd64,linux/arm64
-      tags: ${{ needs.Set-Tags.outputs.tags }}
+      tags: ${{ needs.set-tags.outputs.tags }}
       context: .
       trivy-enabled: true
