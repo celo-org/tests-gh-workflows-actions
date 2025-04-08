@@ -1,12 +1,8 @@
-name: "[cLabs] Publish Docker Image For Testing"
+name: "[cLabs] Publish Docker Image For Testing On PR"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '!**'
+  pull_request:
 
 jobs:
   Build-Container-Test:
@@ -28,4 +24,4 @@ jobs:
       tags: ${{ github.sha }}
       context: .
       trivy-enabled: true
-      pr-comment: false
+      pr-comment: true
