@@ -39,7 +39,7 @@ jobs:
       attestations: write
       id-token: write
     concurrency:
-      group:   ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+      group:   ${{ github.workflow }}-second-${{ github.head_ref || github.ref }}
       cancel-in-progress: true
     uses: celo-org/reusable-workflows/.github/workflows/docker-build.yaml@v3.0.0-alvaro
     with:
