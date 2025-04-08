@@ -29,3 +29,25 @@ jobs:
       context: .
       trivy-enabled: true
       pr-comment: false
+
+  Build-Container-Second:
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: write
+      security-events: write
+      attestations: write
+      id-token: write
+    concurrency:
+      group:   ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+      cancel-in-progress: true
+    uses: celo-org/reusable-workflows/.github/workflows/docker-build.yaml@v3.0.0-alvaro
+    with:
+      workload-id-provider: projects/1094498259535/locations/global/workloadIdentityPools/gh-tests-gh-workflows-actions/providers/github-by-repos
+      service-account: tests-gh-workflows-actions@devopsre.iam.gserviceaccount.com
+      artifact-registry: us-west1-docker.pkg.dev/devopsre/dev-images/test-gh-workflows-actions-second
+      tags: ${{ github.sha }}
+      context: .
+      file: Dockerfile.second
+      trivy-enabled: true
+      pr-comment: false
