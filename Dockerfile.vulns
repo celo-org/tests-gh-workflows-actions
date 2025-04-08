@@ -1,2 +1,2 @@
 FROM alpine:3.10
-CMD ["echo", "Hello DevOps test!"]
+CMD ["echo", "Hello DevOps test with vulns!"]

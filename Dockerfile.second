@@ -1,2 +1,2 @@
 FROM alpine:latest
-CMD ["echo", "Hello DevOps test!"]
+CMD ["echo", "Hello DevOps test, and again!"]
