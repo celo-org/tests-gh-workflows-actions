@@ -17,7 +17,7 @@ jobs:
       run: |
         ls -sail $HOME
 
-    - name: LS $HOME 1
+    - name: LS $HOME 2
       run: |
         ls -sail /home/runner
 
