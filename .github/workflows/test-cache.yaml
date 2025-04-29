@@ -7,9 +7,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Echo $HOME 1
+      run: |
+        echo "$HOME"
+
     - uses: actions/checkout@v4
 
-    - name: Echo $HOME
+    - name: Echo $HOME 2
       run: |
         echo "$HOME"
 
