@@ -15,7 +15,7 @@ jobs:
 
     - name: Echo $HOME 1
       run: |
-        ls $HOME
+        ls -sail $HOME
 
     - uses: actions/checkout@v4
 

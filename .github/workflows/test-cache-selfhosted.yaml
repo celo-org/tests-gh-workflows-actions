@@ -15,11 +15,11 @@ jobs:
 
     - name: LS $HOME 1
       run: |
-        ls $HOME
+        ls -sail $HOME
 
     - name: LS $HOME 1
       run: |
-        ls /home/runner
+        ls -sail /home/runner
 
     - uses: actions/checkout@v4
 
