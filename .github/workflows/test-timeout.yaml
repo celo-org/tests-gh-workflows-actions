@@ -1,0 +1,13 @@
+name: Test timeout
+
+on: push
+
+jobs:
+  timeout:
+    runs-on: ['self-hosted', 'org', 'terraform']
+    timeout-minutes: 1
+
+    steps:
+    - name: Sleep
+      run: |
+        sleep 1000
