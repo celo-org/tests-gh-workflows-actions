@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - '**'
+    branches-ignore:
+      - 'main'  # Excludes the 'main' branch
     tags:
       - '!**'
 
