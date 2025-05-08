@@ -3,8 +3,8 @@ name: "[cLabs] Publish Docker Image For Testing"
 on:
   workflow_dispatch:
   push:
-    branches:
-      - '**'
+    # branches:
+    #   - '**'
     branches-ignore:
       - 'main'  # Excludes the 'main' branch
     tags:
