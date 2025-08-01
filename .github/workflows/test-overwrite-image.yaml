@@ -10,10 +10,10 @@ permissions:
 jobs:
   overwrite-image:
     name: Overwrite runner container image
-    runs-on: ["self-hosted", "org", "terraform"]
+    runs-on: ["self-hosted", "org", "8-cpu"]
+    timeout-minutes: 2
     container:
-      image: alpine:3.21
-    timeout-minutes: 10
+      image: us-west1-docker.pkg.dev/devopsre/actions-runner-controller/celo-monorepo:34b1c5e90f9613964160cdf6bc292b410362ec6d
     steps:
       - name: Print OS info
         run: |
