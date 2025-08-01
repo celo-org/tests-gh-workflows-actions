@@ -1,0 +1,21 @@
+name: Test overwrite-image
+run-name: "Overwrite the self hosted runners image"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  overwrite-image:
+    name: Overwrite runner container image
+    runs-on: ["self-hosted", "org", "terraform"]
+    container:
+      image: alpine:3.21
+    timeout-minutes: 10
+    steps:
+      - name: Print OS info
+        run: |
+          cat /etc/os-release
+          uname -a
