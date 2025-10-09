@@ -1,6 +1,7 @@
 name: Test timeout
 
-on: push
+on:
+  workflow_dispatch:
 
 jobs:
   timeout:
