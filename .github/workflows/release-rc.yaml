@@ -1,0 +1,16 @@
+name: Release RC
+
+on:
+  push:
+    branches:
+      - rc
+
+jobs:
+  release:
+    uses: celo-org/reusable-workflows/.github/workflows/release.yaml@v3.1.0-rc.2
+    with:
+      environment: staging
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
