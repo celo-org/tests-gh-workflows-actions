@@ -1,0 +1,43 @@
+name: OpenBao Secret Integration Test
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Allows manual triggering for testing
+
+jobs:
+  test-openbao-access:
+    runs-on: ubuntu-slim
+    
+    # Required for OIDC: id-token: write allows the action to request a JWT
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Import Secrets from OpenBao
+        id: import-secrets
+        uses: hashicorp/vault-action@v3
+        with:
+          # Your OpenBao URL
+          url: https://openbao-test.akeyless.celo-networks-dev.org
+          # Authentication configuration
+          method: jwt
+          path: jwt
+          role: github-actions-role
+          # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
+          secrets: |
+            secret/test-secret test-secret1 | TEST_OPENBAO_SECRET
+
+      - name: Verify Secret Retrieval
+        run: |
+          if [ -n "$TEST_OPENBAO_SECRET" ]; then
+            echo "✅ SUCCESS: Secret retrieved successfully from OpenBao."
+            # Do NOT print the actual secret; GitHub will mask it, but it's bad practice
+          else
+            echo "❌ FAIL: Secret variable is empty. Check OpenBao roles or policy."
+            exit 1
+          fi
