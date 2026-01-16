@@ -30,7 +30,7 @@ jobs:
           role: github-actions-role
           # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
           secrets: |
-            secret/test-secret test-secret1 | TEST_OPENBAO_SECRET
+            secret/data/test-secret test-secret1 | TEST_OPENBAO_SECRET
 
       - name: Verify Secret Retrieval
         run: |
