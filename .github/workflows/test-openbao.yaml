@@ -23,7 +23,7 @@ jobs:
         uses: hashicorp/vault-action@v3
         with:
           # Your OpenBao URL
-          url: https://openbao-test.akeyless.celo-networks-dev.org
+          url: https://openbao.akeyless.celo-networks-dev.org
           # Authentication configuration
           method: jwt
           path: jwt
