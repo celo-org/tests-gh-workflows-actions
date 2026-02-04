@@ -31,7 +31,7 @@ jobs:
           url: https://openbao.akeyless.celo-networks-dev.org
           # Authentication configuration
           method: jwt
-          path: jwt
+          path: github
           role: celo-org_tests-gh-workflows-actions_all
           # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
           secrets: |
@@ -57,7 +57,7 @@ jobs:
           url: https://openbao.akeyless.celo-networks-dev.org
           # Authentication configuration
           method: jwt
-          path: jwt
+          path: github
           role: celo-org_tests-gh-workflows-actions_all
           # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
           secrets: |
