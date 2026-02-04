@@ -24,7 +24,7 @@ jobs:
 
       - name: Import Secrets from OpenBao on PR
         if: github.event_name == 'pull_request'
-        id: import-secrets
+        id: import-secrets-pr
         uses: hashicorp/vault-action@v3
         with:
           # Your OpenBao URL
@@ -50,7 +50,7 @@ jobs:
 
       - name: Import Secrets from OpenBao on Push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        id: import-secrets
+        id: import-secrets-main
         uses: hashicorp/vault-action@v3
         with:
           # Your OpenBao URL
