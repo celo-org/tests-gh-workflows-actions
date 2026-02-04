@@ -1,0 +1,83 @@
+name: OpenBao Secret Integration Test
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering for testing
+
+jobs:
+  test-openbao-access:
+    runs-on: ubuntu-slim
+    
+    # Required for OIDC: id-token: write allows the action to request a JWT
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Import Secrets from OpenBao on PR
+        if: github.event_name == 'pull_request'
+        id: import-secrets-pr
+        uses: hashicorp/vault-action@v3
+        with:
+          # Your OpenBao URL
+          url: https://openbao.akeyless.celo-networks-dev.org
+          # Authentication configuration
+          method: jwt
+          path: github
+          role: celo-org_tests-gh-workflows-actions
+          # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
+          secrets: |
+            secrets/data/test-secret test-secret1 | TEST_OPENBAO_SECRET
+
+      - name: Verify Secret Retrieval on PR
+        if: github.event_name == 'pull_request'
+        run: |
+          if [ -n "$TEST_OPENBAO_SECRET" ]; then
+            echo "✅ SUCCESS: Secret retrieved successfully from OpenBao."
+            # Do NOT print the actual secret; GitHub will mask it, but it's bad practice
+          else
+            echo "❌ FAIL: Secret variable is empty. Check OpenBao roles or policy."
+            exit 1
+          fi
+
+      - name: Import Secrets from OpenBao on Push to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: import-secrets-main
+        uses: hashicorp/vault-action@v3
+        with:
+          # Your OpenBao URL
+          url: https://openbao.akeyless.celo-networks-dev.org
+          # Authentication configuration
+          method: jwt
+          path: github
+          role: celo-org_tests-gh-workflows-actions_main
+          # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
+          secrets: |
+            secrets/data/test-secret test-secret1 | TEST_OPENBAO_SECRET ;
+            secrets/data/test2/caca caca | TEST_OPENBAO_SECRET_2
+
+      - name: Verify Secret Retrieval on Push to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -n "$TEST_OPENBAO_SECRET" ]; then
+            echo "✅ SUCCESS: Secret data/test-secret retrieved successfully from OpenBao."
+            # Do NOT print the actual secret; GitHub will mask it, but it's bad practice
+          else
+            echo "❌ FAIL: Secret variable is empty. Check OpenBao roles or policy."
+            exit 1
+          fi
+          if [ -n "$TEST_OPENBAO_SECRET_2" ]; then
+            echo "✅ SUCCESS: Secret data/test2/caca retrieved successfully from OpenBao."
+            # Do NOT print the actual secret; GitHub will mask it, but it's bad practice
+          else
+            echo "❌ FAIL: Secret variable is empty. Check OpenBao roles or policy."
+            exit 1
+          fi
