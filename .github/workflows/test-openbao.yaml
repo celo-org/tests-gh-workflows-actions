@@ -32,7 +32,7 @@ jobs:
           # Authentication configuration
           method: jwt
           path: github
-          role: celo-org_tests-gh-workflows-actions_all
+          role: celo-org_tests-gh-workflows-actions
           # Secrets to retrieve: <PATH> <KEY> | <ENV_VAR_NAME>
           secrets: |
             secrets/data/test-secret test-secret1 | TEST_OPENBAO_SECRET
