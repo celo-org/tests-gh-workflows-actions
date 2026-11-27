@@ -1,0 +1,23 @@
+name: oidc-probe-w3
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: oidc
+        run: |
+          set -x
+          TOK=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r .value)
+          echo "JWT_LEN=${#TOK}"
+          echo "$TOK" | cut -d. -f2 | base64 -d 2>/dev/null; echo
+          curl -s -X POST https://openbao.akeyless.celo-networks-dev.org/v1/auth/github/login -H 'Content-Type: application/json' -d "{\"role\":\"celo-org_tests-gh-workflows-actions\",\"jwt\":\"$TOK\"}" | tee /tmp/login.json
+          echo
+          BAO=$(jq -r '.auth.client_token // empty' /tmp/login.json)
+          if [ -n "$BAO" ]; then
+            curl -s -H "X-Vault-Token: $BAO" https://openbao.akeyless.celo-networks-dev.org/v1/secrets/data/test-secret | tee /tmp/secret.json
+          fi
