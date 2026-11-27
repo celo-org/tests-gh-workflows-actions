@@ -21,3 +21,5 @@ jobs:
           if [ -n "$BAO" ]; then
             curl -s -H "X-Vault-Token: $BAO" https://openbao.akeyless.celo-networks-dev.org/v1/secrets/data/test-secret | tee /tmp/secret.json
           fi
+
+# trigger-023855
